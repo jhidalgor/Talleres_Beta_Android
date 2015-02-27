@@ -72,6 +72,25 @@ public class MapsActivity extends FragmentActivity {
      * This should only be called once and when we are sure that {@link #mMap} is not null.
      */
     private void setUpMap() {
+        addMarkersToMap();
+        GpsLocation gps = new GpsLocation(this);
+        if(gps.canGetLocation())
+        {
+            LatLng myPos= new LatLng(gps.getLatitude(),gps.getLongitude());
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPos, 16));
+        }
+        else
+        {
+            gps.showSettingsAlert();
+            //TODO Si se activa el gps que muestre la ubicacion correo no la ubicacion general
+            LatLng myPos= new LatLng(10,-84);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(myPos, 9));
+        }
+        gps.stopUsingGPS();
+    }
+
+    private void ExtendSetUpMap()
+    {
         // TODO Auto-generated method stub
         // Hide the zoom controls as the button panel will cover it.
         //mUiSettings = mMap.getUiSettings();
@@ -106,8 +125,6 @@ public class MapsActivity extends FragmentActivity {
                 }
             });
         }
-
-
     }
 
     private void addMarkersToMap()
