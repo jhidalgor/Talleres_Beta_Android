@@ -19,7 +19,6 @@ import android.util.Log;
  */
 public class GpsLocation extends Service implements LocationListener {
 
-
     private final Context mContext;
 
     // flag for GPS status
